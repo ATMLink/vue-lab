@@ -1,5 +1,5 @@
 <template>
-  <div class="box solid">
+  <div class="margin-solid">
     <slot />
   </div>
 </template>

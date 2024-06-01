@@ -1,5 +1,5 @@
 <template>
-  <div class="box dashed">
+  <div class="margin-dashed">
     <slot />
   </div>
 </template>
