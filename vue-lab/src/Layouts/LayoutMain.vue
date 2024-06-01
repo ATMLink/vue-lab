@@ -5,36 +5,27 @@
 
     <!-- 控制区域 -->
     <div class="container">
-      <a :href="`#/level${level + 1}`" @click="$emit('updateNavigation', level + 1)">Go to Level {{ level + 1 }}</a>
+      <a :href="`#/level${level + 1}`" @click="updateNavigation">Go to Level {{ level + 1 }}</a>
       <button @click="switchLayout">Switch Layout</button>
     </div>
 
-    <!-- 递归调用自身，生成下一级矩形框 -->
-    <template v-if="level < 4">
-      <LayoutMain :level="level + 1" />
-    </template>
+    <!-- 用于显示下一个嵌套矩形框的占位符 -->
+    <router-view v-if="level < 4" /> 
   </component>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
-import { inject } from 'vue'
 
 const level = ref(1)
 const curLayout = ref('MarginSolid')
-
-// 注入全局事件
-const emitter = inject('emitter')
 
 const switchLayout = () => {
   curLayout.value = curLayout.value === 'MarginSolid' ? 'MarginDashed' : 'MarginSolid'
 }
 
-// 触发全局事件
-const updateNavigation = (level) => {
-  emitter.emit('updateNavigation', level)
+const updateNavigation = () => {
+  // 不用手动触发事件，直接跳转路由
+  // 路由跳转会自动更新 `LayoutOverall.vue` 中的导航条
 }
-
-// 监听全局事件
-emitter.on('updateNavigation', updateNavigation)
 </script>

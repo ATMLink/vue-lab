@@ -14,15 +14,15 @@
 </template>
 
 <script setup>
-import { ref, computed, inject } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
 const navigationLevels = ref([1])
+const router = useRouter()
 
-// 注入全局事件
-const emitter = inject('emitter')
-
-// 监听全局事件
-emitter.on('updateNavigation', (level) => {
-  navigationLevels.value.push(level)
+// 监听路由变化
+watch(router.currentRoute, (newRoute) => {
+  const pathSegments = newRoute.path.split('/').filter(segment => segment !== '');
+  navigationLevels.value = pathSegments.map((segment) => parseInt(segment.slice(5)));
 })
 </script>
