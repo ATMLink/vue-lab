@@ -5,11 +5,15 @@ import LayoutMain from '../Layouts/LayoutMain.vue';
 const routes = [
   {
     path: '/',
-    component: LayoutOverall,
+    component: LayoutOverall, // 设置为根路由的子路由
     children: [
       {
+        path: '', // 默认子路由
+        redirect: '/level-0'
+      },
+      {
         path: 'level-:level(\\d+)?',
-        name: 'Level', // 添加路由名称
+        name: 'Level',
         component: LayoutMain,
         props: true,
       },
