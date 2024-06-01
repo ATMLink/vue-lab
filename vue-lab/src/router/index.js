@@ -8,10 +8,11 @@ const routes = [
     component: LayoutOverall,
     children: [
       {
-        path: 'level-:level(\\d+)?', // 动态路由匹配层级
+        path: 'level-:level(\\d+)?',
+        name: 'Level', // 添加路由名称
         component: LayoutMain,
-        props: true, // 将路由参数传递给组件props
-      }
+        props: true,
+      },
     ],
   },
 ];

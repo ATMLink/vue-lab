@@ -2,14 +2,14 @@
   <div class="layout-overall">
     <!-- 导航条 -->
     <div class="navbar">
-      <router-link to="/level-0">Home</router-link>
-      <span v-for="n in level" :key="n">
-        > <router-link :to="`/level-${n}`">Level {{ n }}</router-link>
-      </span>
-    </div> 
+  <router-link :to="{ name: 'Level', params: { level: 0 } }">Home</router-link>
+  <span v-for="n in currentLevel" :key="n">  <-- 将 key 放在 span 上
+    > <router-link :to="{ name: 'Level', params: { level: n } }">Level {{ n }}</router-link>
+  </span>
+</div>
 
     <!-- 主页面占位符 -->
-    <router-view /> 
+    <router-view />
   </div>
 </template>
 
@@ -18,8 +18,5 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const level = computed(() => {
-  const l = parseInt(route.params.level) || 0;
-  return l > 0 ? Array.from({ length: l }, (_, i) => i + 1) : [];
-});
+const currentLevel = computed(() => parseInt(route.params.level) || 0);
 </script>
