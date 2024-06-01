@@ -1,26 +1,18 @@
 <template>
-  <div class="layout-overall">
-    <div class="navbar">
-      <router-link :to="{ name: 'Level', params: { level: 0 } }">
-        Home
-      </router-link>
-      <span v-for="n in currentLevel" :key="n">
-        >
-        <router-link :to="{ name: 'Level', params: { level: n } }">
-          Level {{ n }}
-        </router-link>
-      </span>
-    </div>
-    <router-view/> <div class="main-content">
-      <router-view /> 
-    </div>
+  <div class="navigation">
+    {{ navigation.join(' > ') }}
+  </div>
+  <div class="main">
+    <router-view />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref } from 'vue';
 
-const route = useRoute();
-const currentLevel = computed(() => parseInt(route.params.level) || 0);
+const navigation = ref(['Home']);
+
+const updateNavigation = (newLevel) => {
+  navigation.value.push(newLevel);
+};
 </script>

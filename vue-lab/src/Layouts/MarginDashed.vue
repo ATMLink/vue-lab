@@ -1,13 +1,5 @@
 <template>
-  <div class="margin-dashed">
+  <div class="box dashed">
     <slot />
   </div>
 </template>
-
-<style scoped>
-.margin-dashed {
-  border: 1px dashed blue;
-  padding: 20px;
-  margin-bottom: 10px;
-}
-</style>
