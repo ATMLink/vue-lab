@@ -6,7 +6,8 @@
 
 <style scoped>
 .margin-dashed {
-  border: 2px dashed blue; /* 蓝色虚线边框 */
+  border: 1px dashed blue;
   padding: 20px;
+  margin-bottom: 10px;
 }
 </style>

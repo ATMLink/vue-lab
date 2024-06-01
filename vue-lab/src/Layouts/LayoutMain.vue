@@ -1,31 +1,66 @@
 <template>
   <component :is="curLayout">
     <!-- 正文部分 -->
-    <div class="text">Level {{ level }}</div>
+    <div class="content">
+      <h2>This is Level {{ level }}!</h2>
+    </div>
 
     <!-- 控制区域 -->
     <div class="container">
-      <a :href="`#/level${level + 1}`" @click="updateNavigation">Go to Level {{ level + 1 }}</a>
+      <router-link v-if="level < 4" :to="`/level${level + 1}`">Go to Level {{ level + 1 }}</router-link>
       <button @click="switchLayout">Switch Layout</button>
     </div>
 
     <!-- 用于显示下一个嵌套矩形框的占位符 -->
-    <router-view v-if="level < 4" /> 
+    <router-view v-if="level < 4" />
   </component>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
+import MarginSolid from './MarginSolid.vue';
+import MarginDashed from './MarginDashed.vue';
 
-const level = ref(1)
-const curLayout = ref('MarginSolid')
+const props = defineProps({
+  level: {
+    type: Number,
+    default: 0,
+  },
+  navigationLevels: {
+    type: Array,
+    required: true,
+  },
+  initialDashed: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const level = ref(props.level);
+const curLayout = ref(props.initialDashed ? 'MarginDashed' : 'MarginSolid');
 
 const switchLayout = () => {
-  curLayout.value = curLayout.value === 'MarginSolid' ? 'MarginDashed' : 'MarginSolid'
-}
+  curLayout.value = curLayout.value === 'MarginSolid' ? 'MarginDashed' : 'MarginSolid';
+};
 
 const updateNavigation = () => {
-  // 不用手动触发事件，直接跳转路由
-  // 路由跳转会自动更新 `LayoutOverall.vue` 中的导航条
-}
+  // 通过 props 传递数据
+  handleNavigationUpdate(level.value + 1);
+};
+
+const handleNavigationUpdate = (newLevel) => {
+  props.navigationLevels.value.push(newLevel);
+};
 </script>
+
+<style>
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  margin-bottom: 10px;
+}
+</style>

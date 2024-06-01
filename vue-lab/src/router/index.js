@@ -1,45 +1,29 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import LayoutOverall from '../Layouts/LayoutOverall.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import LayoutOverall from '../Layouts/LayoutOverall.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
     component: LayoutOverall,
     children: [
       {
-        path: 'level1',
-        name: 'Level1',
-        component: LayoutOverall,
-        children: [
-          {
-            path: 'level2',
-            name: 'Level2',
-            component: LayoutOverall,
-            children: [
-              {
-                path: 'level3',
-                name: 'Level3',
-                component: LayoutOverall,
-                children: [
-                  {
-                    path: 'level4',
-                    name: 'Level4',
-                    component: LayoutOverall,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
+        path: '',
+        name: 'Home',
+        component: () => import('../Layouts/LayoutMain.vue'),
+        props: { level: 0 }
       },
-    ],
-  },
-]
+      {
+        path: 'level-:level(\\d+)',
+        component: () => import('../Layouts/LayoutMain.vue'),
+        props: route => ({ level: parseInt(route.params.level) })
+      }
+    ]
+  }
+];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
-})
+});
 
-export default router
+export default router;

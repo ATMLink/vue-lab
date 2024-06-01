@@ -6,7 +6,8 @@
 
 <style scoped>
 .margin-solid {
-  border: 2px solid black; /* 黑色实线边框 */
+  border: 1px solid black;
   padding: 20px;
+  margin-bottom: 10px;
 }
 </style>
