@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LayoutOverall from '../Layouts/LayoutOverall.vue';
+import LayoutMain from '../Layouts/LayoutMain.vue';
 
 const routes = [
   {
@@ -9,13 +10,36 @@ const routes = [
       {
         path: '',
         name: 'Home',
-        component: () => import('../Layouts/LayoutMain.vue'),
-        props: { level: 0 }
-      },
-      {
-        path: 'level-:level(\\d+)',
-        component: () => import('../Layouts/LayoutMain.vue'),
-        props: route => ({ level: parseInt(route.params.level) })
+        component: LayoutMain,
+        props: { level: 0 },
+        children: [
+          {
+            path: 'level-1',
+            component: LayoutMain,
+            props: { level: 1 },
+            children: [
+              {
+                path: 'level-2',
+                component: LayoutMain,
+                props: { level: 2 },
+                children: [
+                  {
+                    path: 'level-3',
+                    component: LayoutMain,
+                    props: { level: 3 },
+                    children: [
+                      {
+                        path: 'level-4',
+                        component: LayoutMain,
+                        props: { level: 4 }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }
